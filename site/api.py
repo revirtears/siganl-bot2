@@ -5,9 +5,12 @@ import uvicorn
 app = FastAPI()
 
 
-@app.get("/postback")
+@app.post("/postback")
 async def handle_postback(request: Request):
-    print(request)
+    query_params = request.query_params
+    print(query_params)
+    query_dict = dict(query_params)
+    return {"message": "Query parameters received", "data": query_dict}
 
 
 if __name__ == "__main__":
