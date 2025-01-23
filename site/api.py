@@ -1,27 +1,13 @@
 from fastapi import FastAPI, HTTPException, Query, Request
 import uvicorn
 
-from signature import BotSettings
-
 
 app = FastAPI()
-bot_settings = BotSettings()
 
 
 @app.get("/postback")
 async def handle_postback(request: Request):
-    user_id = request.query_params.get("user_id")
-
-    if user_id:
-        try:
-            print(f"User ID: {user_id}")
-            return {"message": "Postback успешно получен", "user_id": user_id}, 200
-        except ValueError:
-            print(f"Некорректный user_id: {user_id}")
-            raise HTTPException(status_code=400, detail="Некорректный user_id")
-    else:
-        print("Параметр user_id отсутствует")
-        raise HTTPException(status_code=400, detail="Параметр user_id отсутствует")
+    print(request)
 
 
 if __name__ == "__main__":
