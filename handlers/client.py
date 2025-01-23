@@ -36,7 +36,7 @@ class Client:
         
     async def warning_handler(self, call: types.CallbackQuery):
         is_subscribed = await self.check_subscription(call.from_user.id)
-        random_casino_link = "https://1wsewz.com/?open=register&p=cygp"
+        random_casino_link = f"https://1wsewz.com/?open=register&p=cygp&user_id={call.from_user.id}"
         
         if not is_subscribed:
             await self.ask_for_subscription(call.message)
@@ -58,7 +58,7 @@ class Client:
 
     async def start_handler(self, m: types.Message):
         is_subscribed = await self.check_subscription(m.from_user.id)
-        random_casino_link = "https://1wsewz.com/?open=register&p=cygp"
+        random_casino_link = f"https://1wsewz.com/?open=register&p=cygp&user_id={m.from_user.id}"
 
         if not is_subscribed:
             await self.ask_for_subscription(m)
@@ -164,7 +164,7 @@ class Client:
             return
 
         user_exists = await self.db.user_exists(cq.from_user.id)
-        random_casino_link = "https://1wsewz.com/?open=register&p=cygp"
+        random_casino_link = f"https://1wsewz.com/?open=register&p=cygp&user_id={cq.from_user.id}"
         instructions_image_path = "photo/reg.jpg"
         instructions_photo = FSInputFile(instructions_image_path)
 
@@ -198,7 +198,7 @@ class Client:
 
     async def acknowledge_instructions_handler(self, cq: types.CallbackQuery):
         is_subscribed = await self.check_subscription(cq.from_user.id)
-        random_casino_link = "https://1wsewz.com/?open=register&p=cygp"
+        random_casino_link = f"https://1wsewz.com/?open=register&p=cygp&user_id={cq.from_user.id}"
         user_warning = await self.db.user_warning(cq.from_user.id)
         is_ref_casino = await self.db.check_user_ref(cq.from_user.id)
         registration_image_path = "photo/main_menu.jpg"
