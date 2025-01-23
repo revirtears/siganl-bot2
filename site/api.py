@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 import uvicorn
 
 from signature import BotSettings
@@ -9,13 +9,13 @@ bot_settings = BotSettings()
 
 
 @app.get("/postback")
-async def handle_postback(user_id: int = Query(None)):
-    if user_id is not None:
+async def handle_postback(request: Request):
+    user_id = request.query_params.get("user_id")
+
+    if user_id:
         try:
             print(f"User ID: {user_id}")
-            await bot_settings.db.add_user_ref(uid=user_id)
-            
-            return {"message": "Postback успешно получен"}, 200
+            return {"message": "Postback успешно получен", "user_id": user_id}, 200
         except ValueError:
             print(f"Некорректный user_id: {user_id}")
             raise HTTPException(status_code=400, detail="Некорректный user_id")
